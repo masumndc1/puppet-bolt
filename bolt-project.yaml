@@ -1,0 +1,4 @@
+---
+name: practise
+modules: ['puppetlabs-stdlib',
+  'mschuchard-extended_stdlib']
