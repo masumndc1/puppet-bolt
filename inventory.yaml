@@ -1,0 +1,37 @@
+groups:
+  - name: ubu-lxd
+    targets:
+      - 192.168.244.146
+    config:
+      transport: ssh
+      ssh:
+        user: masum
+        run-as: root
+        private-key: ~/.ssh/id_rsa
+        host-key-check: false
+        batch-mode: false
+        connect-timeout: 30
+  - name: suse
+    targets:
+      - 192.168.244.150
+    config:
+      transport: ssh
+      ssh:
+        user: masum
+        run-as: root
+        private-key: ~/.ssh/id_rsa
+        host-key-check: false
+        batch-mode: false
+        connect-timeout: 30
+  - name: sys-alma9-dev1
+    targets:
+      - 10.187.242.133
+    config:
+      transport: ssh
+      ssh:
+        user: masum
+        run-as: root
+        private-key: ~/.ssh/id_ed25519
+        host-key-check: false
+        batch-mode: false
+        connect-timeout: 30
