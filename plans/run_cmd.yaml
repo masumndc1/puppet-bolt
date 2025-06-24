@@ -1,0 +1,14 @@
+version: 2
+description: "run a pp file"
+parameters:
+  targets:
+    type: TargetSpec
+    description: "The targets to run the plan on"
+steps:
+  - description: show something
+    name: configure
+    targets: $targets
+    resources:
+      - class: example
+
+return: $configure

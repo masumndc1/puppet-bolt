@@ -1,0 +1,27 @@
+version: 2
+description: "Install and start Apache"
+parameters:
+  targets:
+    type: TargetSpec
+    description: "The targets to run the plan on"
+steps:
+  - name: install_apache
+    task: package
+    targets: $targets
+    parameters:
+      action: install
+      name: apache2
+
+  - name: start_service
+    task: service
+    targets: $targets
+    parameters:
+      name: apache2
+      action: start
+
+  - name: enable_service
+    task: service
+    targets: $targets
+    parameters:
+      name: apache2
+      action: enable
