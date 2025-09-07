@@ -4,5 +4,8 @@
 # The following directive installs modules to the managed moduledir.
 moduledir '.modules'
 
+mod 'puppet/yum', '7.2.0'
+mod 'puppetlabs/apt', '11.0.0'
 mod 'mschuchard/extended_stdlib', '1.2.1'
 mod 'puppetlabs/stdlib', '9.7.0'
+mod 'puppetlabs/concat', '9.1.0'
