@@ -1,0 +1,10 @@
+---
+localuser: "masum"
+packages: [
+  'git',
+  'iftop',
+  'htop',
+  'snapd',
+  'gcc',
+  'clang',
+]
