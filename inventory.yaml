@@ -1,37 +1,30 @@
 groups:
-  - name: ubu-lxd
+  - name: ubu-incus
     targets:
-      - 192.168.244.146
+      - 192.168.244.147
+
+  - name: debian13
+    targets:
+      - 192.168.244.165
+
+  - name: lap-macmini
+    targets:
+      - sys-alma9-dev1
+      - sys-deb12-dev1
+      - sys-deb13-dev1
+      - sys-suse-dev1
+      - sys-ubu22-dev1
+      - sys-ubu24-dev1
     config:
       transport: ssh
       ssh:
-        user: masum
-        run-as: root
-        private-key: ~/.ssh/id_rsa
-        host-key-check: false
-        batch-mode: false
-        connect-timeout: 30
-  - name: suse
-    targets:
-      - 192.168.244.150
-    config:
-      transport: ssh
-      ssh:
-        user: masum
-        run-as: root
-        private-key: ~/.ssh/id_rsa
-        host-key-check: false
-        batch-mode: false
-        connect-timeout: 30
-  - name: sys-alma9-dev1
-    targets:
-      - 10.187.242.133
-    config:
-      transport: ssh
-      ssh:
-        user: masum
-        run-as: root
-        private-key: ~/.ssh/id_ed25519
-        host-key-check: false
-        batch-mode: false
-        connect-timeout: 30
+        proxyjump: "lap-macmini"
+
+config:
+  ssh:
+    user: masum
+    run-as: root
+    private-key: ~/.ssh/id_ed25519
+    host-key-check: false
+    batch-mode: false
+    connect-timeout: 30
