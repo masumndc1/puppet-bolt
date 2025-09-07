@@ -1,5 +1,6 @@
 ---
 localuser: "masum"
+backup_user: "khabir"
 packages: [
   'git',
   'iftop',
