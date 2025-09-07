@@ -1,0 +1,23 @@
+# nice document on this
+# https://www.cyberciti.biz/faq/create-ssh-config-file-on-linux-unix/
+# add the content of this file at the end of your
+# ~/.ssh/config file.
+
+Host lap-macmini
+  HostName 192.168.2.13
+  User masum
+  IdentityFile ~/.ssh/id_ed25519
+
+Host sys*dev1 puppet*
+  HostName %h
+  User masum
+  IdentityFile ~/.ssh/id_ed25519
+  ProxyJump lap-macmini
+
+Host *
+  ControlMaster auto
+  ForwardAgent no
+  ServerAliveInterval 60
+  ServerAliveCountMax 30
+  ControlPersist 30m
+  StrictHostKeyChecking no
