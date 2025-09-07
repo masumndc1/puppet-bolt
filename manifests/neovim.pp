@@ -1,0 +1,3 @@
+package { 'neovim':
+  ensure => installed,
+}
