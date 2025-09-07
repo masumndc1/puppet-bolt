@@ -13,3 +13,5 @@ modules:
   version_requirement: 11.0.0
 - name: puppet-yum
   version_requirement: 7.2.0
+- git: https://github.com/masumndc1/puppet-infra.git
+  ref: master
