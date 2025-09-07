@@ -1,4 +1,15 @@
 ---
 name: practise
-modules: ['puppetlabs-stdlib',
-  'mschuchard-extended_stdlib']
+apply-settings:
+  evaltrace: true
+  log_level: debug
+  show_diff: true
+  trace: true
+color: true
+modules:
+- puppetlabs-stdlib
+- mschuchard-extended_stdlib
+- name: puppetlabs-apt
+  version_requirement: 11.0.0
+- name: puppet-yum
+  version_requirement: 7.2.0
