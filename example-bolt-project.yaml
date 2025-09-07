@@ -1,0 +1,79 @@
+# bolt-project.yaml
+analytics: false
+apply-settings:
+  evaltrace: true
+  log_level: debug
+  show_diff: true
+  trace: true
+color: false
+compile-concurrency: 5
+concurrency: 50
+disable-warnings:
+format: json
+future:
+  script_interpreter: true
+hiera-config: "~/.puppetlabs/bolt/hiera.yaml"
+log:
+  console:
+    level: info
+  "~/logs/debug.log":
+    append: false
+    level: debug
+modulepath:
+- "~/.puppetlabs/bolt/modules"
+- "~/.puppetlabs/bolt/site-modules"
+module-install:
+  forge:
+    authorization_token: Bearer eyJhbGciOiJIUzI1NiIsInR5c...
+    baseurl: https://forge.example.com
+    proxy: https://my-forge-proxy.com:8080
+  proxy: https://my-proxy.com:8080
+modules:
+- puppetlabs-facts
+- name: puppetlabs-mysql
+- name: puppetlabs-apache
+  version_requirement: 5.5.0
+- name: puppetlabs-puppetdb
+  version_requirement: 7.x
+- name: puppetlabs-firewall
+  version_requirement: ">= 1.0.0 < 3.0.0"
+- git: https://github.com/puppetlabs/puppetlabs-apt
+  ref: 7.6.0
+name: myproject
+plans:
+- myproject
+- myproject::foo
+- myproject::bar
+- myproject::deploy::*
+plugin-cache:
+  ttl: 3600
+plugin-hooks:
+  puppet_library:
+    plugin: puppet_agent
+    version: 6.15.0
+    _run_as: root
+plugins:
+  pkcs7:
+    keysize: 1024
+policies:
+- myproject::apache
+- myproject::postgres
+puppetdb:
+  cacert: "/etc/puppetlabs/puppet/ssl/certs/ca.pem"
+  cert: "/etc/puppetlabs/puppet/ssl/certs/my-host.example.com.pem"
+  connect_timeout: 120
+  key: "/etc/puppetlabs/puppet/ssl/private_keys/my-host.example.com.pem"
+  read_timeout: 120
+  server_urls:
+  - https://puppet.example.com:8081
+  token: "~/.puppetlabs/token"
+rerunfile: "/Users/bolt/project/rerun.json"
+save-rerun: false
+spinner: false
+stream: true
+tasks:
+- myproject
+- myproject::foo
+- myproject::bar
+- myproject::deploy_*
+trusted-external-command: "/etc/puppetlabs/facts/trusted_external.sh"
