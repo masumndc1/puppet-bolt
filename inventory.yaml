@@ -1,4 +1,14 @@
 groups:
+  - name: cloud-test
+    targets:
+      - 195.148.31.213
+    config:
+      transport: ssh
+      ssh:
+        user: ubuntu
+        host-key-check: false
+        private-key: ~/.ssh/id_ed25519
+
   - name: ubu-incus
     targets:
       - 192.168.244.147
