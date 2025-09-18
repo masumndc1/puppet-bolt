@@ -1,0 +1,8 @@
+<%= @facts['hostname'] %>:
+This machine is up for <%= @facts['system_uptime']['uptime'] %>
+OS name is <%= @_name %> of <%= @_family %> family
+Code name is <%= @_distro %>
+
+<% if @facts['os']['architecture'] == 'amd64' %>
+This OS architecture is <%= @facts['os']['architecture'] %>
+<% end %>
