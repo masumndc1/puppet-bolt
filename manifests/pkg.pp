@@ -1,4 +1,4 @@
-if ($facts['os']['distro']['id'] == "Debian") {
+if ($facts['os']['distro']['id'] =~ "Debian|Ubuntu") {
   apt::keyring { 'puppetlabs-keyring.gpg':
     source => 'https://apt.puppetlabs.com/keyring.gpg',
   }
