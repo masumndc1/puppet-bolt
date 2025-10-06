@@ -1,4 +1,4 @@
 ---
 # debian family hiera data
 # this will also cover ubuntu
-whatos: "ubuntu22"
+packages: [ 'python3' ]
