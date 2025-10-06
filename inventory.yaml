@@ -9,6 +9,16 @@ groups:
         host-key-check: false
         private-key: ~/.ssh/id_ed25519
 
+  - name: cloud-ubu
+    targets:
+      - 86.50.228.36
+    config:
+      transport: ssh
+      ssh:
+        user: masum
+        host-key-check: false
+        private-key: ~/.ssh/id_ed25519
+
   - name: ubu-incus
     targets:
       - 192.168.244.147
@@ -17,7 +27,7 @@ groups:
     targets:
       - 192.168.244.165
 
-  - name: lap-macmini
+  - name: lap-macmini-incus
     targets:
       - sys-alma9-dev1
       - sys-deb12-dev1
@@ -25,14 +35,22 @@ groups:
     config:
       transport: ssh
       ssh:
+        user: masum
+        run-as: root
         host-key-check: false
         proxyjump: "lap-macmini"
+        private-key: ~/.ssh/id_ed25519
 
-config:
-  ssh:
-    user: masum
-    run-as: root
-    private-key: ~/.ssh/id_ed25519
-    host-key-check: false
-    batch-mode: false
-    connect-timeout: 30
+  - name: cloud-ubu-incus
+    targets:
+      - sys-alma9-dev6
+      - sys-deb12-dev6
+      - sys-ubu22-dev6
+    config:
+      transport: ssh
+      ssh:
+        user: masum
+        run-as: root
+        host-key-check: false
+        proxyjump: "cloud-ubu"
+        private-key: ~/.ssh/id_ed25519
