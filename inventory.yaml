@@ -54,3 +54,4 @@ groups:
         host-key-check: false
         proxyjump: "cloud-ubu"
         private-key: ~/.ssh/id_ed25519
+        connect-timeout: 30
