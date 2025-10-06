@@ -5,9 +5,17 @@
 Host *
   StrictHostKeyChecking no
 
-
 Host lap-macmini
   HostName 192.168.2.13
+  User masum
+  IdentityFile ~/.ssh/id_ed25519
+# this will prevent following error
+# Warning: Permanently added '' (ED25519) to the list of known hosts.
+  StrictHostKeyChecking accept-new
+  UserKnownHostsFile ~/.ssh/known_hosts
+
+Host cloud-ubu
+  HostName 86.50.228.36
   User masum
   IdentityFile ~/.ssh/id_ed25519
 # this will prevent following error
@@ -20,4 +28,11 @@ Host sys*dev1
   User masum
   IdentityFile ~/.ssh/id_ed25519
   ProxyJump lap-macmini
+  StrictHostKeyChecking no
+
+Host sys*dev6
+  HostName %h
+  User masum
+  IdentityFile ~/.ssh/id_ed25519
+  ProxyJump cloud-ubu
   StrictHostKeyChecking no
