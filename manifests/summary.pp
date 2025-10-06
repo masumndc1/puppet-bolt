@@ -6,5 +6,5 @@ $_distro = $facts['os']['distro']['codename']
 file { "/tmp/summary.txt":
   ensure => 'present',
   mode => '0644',
-  content => template('bolt/summary.erb'),
+  content => template('base/summary.erb'),
 }
