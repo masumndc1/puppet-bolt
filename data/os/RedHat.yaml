@@ -1,2 +1,3 @@
 ---
 whatos: "RedHat"
+packages: [ 'epel-release' ]
