@@ -23,6 +23,15 @@ Host cloud-ubu
   StrictHostKeyChecking accept-new
   UserKnownHostsFile ~/.ssh/known_hosts
 
+Host cloud-hpc
+  HostName 86.50.230.173
+  User masum
+  IdentityFile ~/.ssh/id_ed25519
+# this will prevent following error
+# Warning: Permanently added '' (ED25519) to the list of known hosts.
+  StrictHostKeyChecking accept-new
+  UserKnownHostsFile ~/.ssh/known_hosts
+
 Host sys*dev1
   HostName %h
   User masum
@@ -35,4 +44,11 @@ Host sys*dev6
   User masum
   IdentityFile ~/.ssh/id_ed25519
   ProxyJump cloud-ubu
+  StrictHostKeyChecking no
+
+Host sys*dev7
+  HostName %h
+  User masum
+  IdentityFile ~/.ssh/id_ed25519
+  ProxyJump cloud-hpc
   StrictHostKeyChecking no
