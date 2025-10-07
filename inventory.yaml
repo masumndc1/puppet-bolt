@@ -55,3 +55,18 @@ groups:
         proxyjump: "cloud-ubu"
         private-key: ~/.ssh/id_ed25519
         connect-timeout: 30
+
+  - name: cloud-hpc-incus
+    targets:
+      - sys-alma9-dev7
+      - sys-deb12-dev7
+      - sys-ubu22-dev7
+    config:
+      transport: ssh
+      ssh:
+        user: masum
+        run-as: root
+        host-key-check: false
+        proxyjump: "cloud-hpc"
+        private-key: ~/.ssh/id_ed25519
+        connect-timeout: 30
