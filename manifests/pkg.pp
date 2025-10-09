@@ -2,6 +2,10 @@ if ($facts['os']['distro']['id'] =~ "Debian|Ubuntu") {
   apt::keyring { 'puppetlabs-keyring.gpg':
     source => 'https://apt.puppetlabs.com/keyring.gpg',
   }
+
+  package { 'python3':
+    ensure => installed,
+  }
 }
 
 if ($facts['os']['distro']['release']['major'] in ['8','9','10']) {
