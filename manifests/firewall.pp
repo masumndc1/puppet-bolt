@@ -6,6 +6,7 @@ firewalld_zone { 'restricted':
   ensure           => present,
   target           => '%%REJECT%%',
   purge_rich_rules => true,
+  require => Class['firewalld']
 }
 
 firewalld_rich_rule { 'McAffee':
@@ -17,4 +18,5 @@ firewalld_rich_rule { 'McAffee':
   },
   zone   => 'public',
   action => 'accept',
+  require => Class['firewalld']
 }
