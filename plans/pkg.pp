@@ -18,7 +18,6 @@ plan practise::pkg (
     elsif $facts['os']['family'] =~ "RedHat" {
       $os_major = $facts['os']['release']['major']
       $source = "https://dl.fedoraproject.org/pub/epel/epel-release-latest-${os_major}.noarch.rpm"
-    #  $source = "https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm"
 
       yum::install { 'epel-release':
         ensure => present,
