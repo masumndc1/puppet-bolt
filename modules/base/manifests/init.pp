@@ -1,5 +1,5 @@
 class base {
-  package { ['vim', 'curl']:
-    ensure => installed,
-  }
+  include base::pkg
+  include base::uptime
+  include base::summary
 }
