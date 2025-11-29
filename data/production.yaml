@@ -1,1 +1,5 @@
 ---
+# this empty {} is added to prevent puppet
+# through any error. when any key is added
+# then remove this key.
+{}

@@ -1,4 +1,5 @@
 ---
 # debian family hiera data
 # this will also cover ubuntu
+whatos: "Debian"
 packages: [ 'python3' ]
