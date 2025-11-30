@@ -152,7 +152,49 @@ Failed on 1 target: 192.168.244.146
 Ran on 1 target in 2.7 sec
 
 ```
+# alternative
+There is another way of running manifests files from this repo,
+which we call class way. If we need to test/create a new manifest
+file, add it to a module and then add the module to site.pp file.
 
+```bash
+# say, write the manifest file inside the module
+~/Documents/github/puppet-bolt/modules/base/manifests main
+❯ ls
+ command.pp    greet.pp   neovim.pp      pkg.pp       uptime.pp
+ firewall.pp   init.pp    partition.pp   summary.pp
+
+# add the manifest files to the module init file
+❯ cat init.pp
+class base {
+  #include base::uptime
+  #include base::firewall
+  include base::pkg
+  include base::summary
+  include base::neovim
+  include base::command
+  include base::partition
+  include base::greet
+}
+❯
+
+# push the changes directly to the node or through git
+❯ cat rsync_push.sh
+#!/bin/bash
+
+rsync -avz -progress ~/Documents/github/puppet-bolt -e "ssh -F ssh.config" masum@sys-deb12-dev1":/home/masum/
+
+# update modules by r10k (optional)
+r10k pupppetfile install --force
+
+# in the node, from the puppet-bolt directory, run following command
+
+❯ cat puppet_run.sh
+#!/bin/bash
+
+/opt/puppetlabs/bin/puppet apply manifests/site.pp --modulepath=./modules:.modules --hiera_config=hiera.yaml
+
+```
 
 [!NOTE]
 > This is work in progress.
