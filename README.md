@@ -158,7 +158,14 @@ which we call class way. If we need to test/create a new manifest
 file, add it to a module and then add the module to site.pp file.
 
 ```bash
-# say, write the manifest file inside the module
+# our site.pp file where we add module
+~/Documents/github/puppet-bolt main
+❯ cat manifests/site.pp
+node default {
+  include base
+}
+
+# add the manifest file inside the base module, for example
 ~/Documents/github/puppet-bolt/modules/base/manifests main
 ❯ ls
  command.pp    greet.pp   neovim.pp      pkg.pp       uptime.pp
