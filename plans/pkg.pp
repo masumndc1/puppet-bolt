@@ -1,7 +1,6 @@
 plan practise::pkg (
   TargetSpec $nodes,
 ) {
-
   apply_prep($nodes)
   $report = apply($nodes) {
     $pkgs = lookup('py_pkgs')
@@ -30,5 +29,5 @@ plan practise::pkg (
       }
     }
   }
-  return $report
+  # return $report
 }
