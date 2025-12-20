@@ -8,5 +8,10 @@ packages: [
   'snapd',
   'gcc',
   'clang',
+  'net-tools'
+]
+py_pkgs: [
+  'python3',
+  'ansible',
 ]
 base::pkg::shell: "zsh"
