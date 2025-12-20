@@ -3,7 +3,7 @@ plan practise::uptime (
 ) {
   apply_prep($nodes)
   $report = apply($nodes) {
-    $_what_os = lookup('whatos')
+    $_what_os = lookup('whatos', default_value => undef)
     $uptime_msgs = $facts['system_uptime'].map |$type, $value| {
       "${value} ${type}"
     }
