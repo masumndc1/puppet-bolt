@@ -6,7 +6,7 @@ plan practise::summary (
     $_family = $facts['os']['family']
     $_name = $facts['os']['name']
     $_release = $facts['os']['release']['full']
-    $_distro = $facts['os']['distro']['codename']
+    $_distro = $facts['os']['name']
 
     file { "/tmp/summary.txt":
       ensure => 'present',

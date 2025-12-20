@@ -12,5 +12,5 @@ plan practise::uptime (
       message => "uptime : ${uptime_msgs} on ${_what_os}"
     }
   }
-  return $report
+  #return $report
 }
