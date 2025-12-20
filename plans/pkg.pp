@@ -4,13 +4,11 @@ plan practise::pkg (
 
   apply_prep($nodes)
   $report = apply($nodes) {
+    $pkgs = lookup('py_pkgs')
     if ($facts['os']['distro']['id'] =~ "Debian|Ubuntu") {
       apt::keyring { 'puppetlabs-keyring.gpg':
         source => 'https://apt.puppetlabs.com/keyring.gpg',
-      }
-
-      package { 'python3':
-        ensure => installed,
+        mode => '0644'
       }
     }
 
@@ -24,7 +22,13 @@ plan practise::pkg (
         source  => $source,
       }
     }
+
+    $pkgs.each | $pkg | {
+      package { "$pkg":
+        name => $pkg,
+        ensure => installed,
+      }
+    }
   }
   return $report
 }
-
