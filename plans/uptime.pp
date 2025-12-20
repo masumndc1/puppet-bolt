@@ -9,7 +9,7 @@ plan practise::uptime (
     }
 
     notify { 'uptime_summary':
-      message => "uptime : ${uptime_msgs} on ${$_what_os}"
+      message => "uptime : ${uptime_msgs} on ${_what_os}"
     }
   }
   return $report
