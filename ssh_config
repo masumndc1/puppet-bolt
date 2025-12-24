@@ -32,11 +32,27 @@ Host cloud-hpc
   StrictHostKeyChecking accept-new
   UserKnownHostsFile ~/.ssh/known_hosts
 
+Host lap-lenovo
+  HostName 192.168.2.5
+  User masum
+  IdentityFile ~/.ssh/id_ed25519
+# this will prevent following error
+# Warning: Permanently added '' (ED25519) to the list of known hosts.
+  StrictHostKeyChecking accept-new
+  UserKnownHostsFile ~/.ssh/known_hosts
+
 Host sys*dev1
   HostName %h
   User masum
   IdentityFile ~/.ssh/id_ed25519
   ProxyJump lap-macmini
+  StrictHostKeyChecking no
+
+Host sys*dev3
+  HostName %h
+  User masum
+  IdentityFile ~/.ssh/id_ed25519
+  ProxyJump lap-lenovo
   StrictHostKeyChecking no
 
 Host sys*dev6
