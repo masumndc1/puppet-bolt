@@ -10,7 +10,7 @@ mod 'infra',
 mod 'puppet/firewalld', '5.1.0'
 mod 'puppet/yum', '7.2.0'
 mod 'puppetlabs/apt', '11.0.0'
-mod 'mschuchard/extended_stdlib', '1.3.0'
+mod 'mschuchard/extended_stdlib', '1.3.1'
 mod 'puppetlabs/stdlib', '9.7.0'
 mod 'puppetlabs/augeas_core', '1.5.0'
 mod 'puppetlabs/concat', '9.1.0'
