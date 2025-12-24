@@ -70,3 +70,18 @@ groups:
         proxyjump: "cloud-hpc"
         private-key: ~/.ssh/id_ed25519
         connect-timeout: 30
+
+  - name: lap-lenovo-incus
+    targets:
+      - sys-alma9-dev3
+      - sys-deb12-dev3
+      - sys-ubu22-dev3
+    config:
+      transport: ssh
+      ssh:
+        user: masum
+        run-as: root
+        host-key-check: false
+        proxyjump: "lap-lenovo"
+        private-key: ~/.ssh/id_ed25519
+        connect-timeout: 30
