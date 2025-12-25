@@ -1,17 +1,20 @@
 ---
 localuser: "masum"
+user: "masum"
 backup_user: "khabir"
-packages: [
-  'git',
-  'iftop',
-  'htop',
-  'snapd',
-  'gcc',
-  'clang',
-  'net-tools'
-]
-py_pkgs: [
-  'python3',
-  'ansible',
-]
+pkgs:
+  [
+    "git",
+    "iftop",
+    "htop",
+    "gcc",
+    "clang",
+    "net-tools",
+    "python3",
+    "ansible",
+    "neovim",
+  ]
 base::pkg::shell: "zsh"
+keys:
+  - "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO1BdRWmJL0fFpehq0QsQ7+IchlGYRE+UDGGpvnorhuP"
+  - "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFEU4254G0CmR2c6421FlF7TCCK/GU9tv1XSqQ3orYDH"
