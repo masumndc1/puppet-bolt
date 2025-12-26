@@ -29,6 +29,7 @@ def main():
         sys.exit()
 
     for node in NODES:
+        print("\n" + node)
         cmds(node, num)
 
 
