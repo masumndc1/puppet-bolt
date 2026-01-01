@@ -85,3 +85,19 @@ groups:
         proxyjump: "lap-lenovo"
         private-key: ~/.ssh/id_ed25519
         connect-timeout: 30
+
+  - name: lap-mac-incus
+    targets:
+      - sys-alma9-dev9
+      - sys-deb12-dev9
+      - sys-deb13-dev9
+      - sys-ubu22-dev9
+    config:
+      transport: ssh
+      ssh:
+        user: masum
+        run-as: root
+        host-key-check: false
+        proxyjump: "colima"
+        private-key: ~/.ssh/id_ed25519
+        connect-timeout: 30
