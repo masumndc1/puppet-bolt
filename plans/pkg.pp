@@ -3,7 +3,7 @@ plan practise::pkg (
 ) {
   apply_prep($nodes)
   $report = apply($nodes) {
-    $pkgs = lookup('py_pkgs')
+    $pkgs = lookup('pkgs', merge => 'unique')
     if ($facts['os']['distro']['id'] =~ "Debian|Ubuntu") {
       apt::keyring { 'puppetlabs-keyring.gpg':
         source => 'https://apt.puppetlabs.com/keyring.gpg',
