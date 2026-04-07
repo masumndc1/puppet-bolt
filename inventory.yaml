@@ -92,6 +92,7 @@ groups:
       - sys-deb12-dev9
       - sys-deb13-dev9
       - sys-ubu22-dev9
+      - openstackmac
     config:
       transport: ssh
       ssh:
