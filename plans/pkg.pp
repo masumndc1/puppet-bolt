@@ -1,7 +1,11 @@
 plan practise::pkg (
   TargetSpec $nodes,
 ) {
-  apply_prep($nodes)
+  apply_prep($nodes, {
+    '_catch_errors' => true,
+    'facts' => ['os', 'networking']
+    }
+  )
   $report = apply($nodes) {
     $pkgs = lookup('pkgs', merge => 'unique')
     if ($facts['os']['distro']['id'] =~ "Debian|Ubuntu") {
