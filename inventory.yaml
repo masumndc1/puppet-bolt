@@ -1,4 +1,14 @@
+version: 2
+features:
+  - puppet-agent
+
 groups:
+  - name: localhost
+    targets:
+      - 127.0.0.1
+    config:
+      transport: local
+
   - name: cloud-test
     targets:
       - 195.148.31.213
@@ -35,6 +45,11 @@ groups:
     config:
       transport: ssh
       ssh:
+        native-ssh: true
+        ssh-command: ["ssh",
+         "-o", "ControlMaster=auto",
+         "-o", "ControlPath=~/.ssh/bolt-%r@%h:%p",
+         "-o", "ControlPersist=60s"]
         user: masum
         run-as: root
         host-key-check: false
