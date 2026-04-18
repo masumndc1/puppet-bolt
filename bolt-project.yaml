@@ -1,5 +1,7 @@
 ---
 name: practise
+plugin-cache:
+  ttl: 3600
 apply-settings:
   evaltrace: true
   log_level: debug
