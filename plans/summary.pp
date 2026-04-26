@@ -8,6 +8,7 @@ plan practise::summary (
     $_name = $facts['os']['name']
     $_release = $facts['os']['release']['full']
     $_distro = $facts['os']['name']
+    $_arch = $facts['os']['architecture']
 
     file { "/tmp/summary.txt":
       ensure => 'present',
