@@ -3,6 +3,7 @@ plan practise::summary (
 ) {
   apply_prep($nodes)
   $result = apply($nodes) {
+    $_hostname = $facts['networking']['hostname']
     $_family = $facts['os']['family']
     $_name = $facts['os']['name']
     $_release = $facts['os']['release']['full']
