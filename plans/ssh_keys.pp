@@ -1,7 +1,7 @@
 plan practise::ssh_keys (
   TargetSpec $nodes,
 ) {
-  # apply_prep($nodes)
+  apply_prep($nodes)
   $report = apply($nodes) {
     $user = lookup('user', default_value => [])
     $keys = lookup('keys')
