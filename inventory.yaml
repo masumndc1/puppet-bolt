@@ -107,6 +107,8 @@ groups:
       - sys-deb12-dev9
       - sys-deb13-dev9
       - sys-ubu22-dev9
+      - keystone-alma9-dev9
+      - db-alma9-dev9
       - openstackmac
     config:
       transport: ssh
