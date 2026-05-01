@@ -7,6 +7,7 @@ plan practise::keystone (
   $kstone_db_pass = lookup('keystone_db_pass', default_value => [])
   $admin_tkn = lookup('admin_token', default_value => [])
   $admin_pss = lookup('admin_pass', default_value => [])
+  $ports = lookup('open_ports', default_value => [])
 
   if $facts['os']['family'] =~ "RedHat" {
     $pkgs.each | $pkg | {
@@ -20,46 +21,51 @@ plan practise::keystone (
   # define all lookup here
   include 'mysql::client'
 
-  # db connection
-  class { 'keystone::db':
-    database_connection => 'mysql+pymysql://keystone:"${kstone_db_pass}"@db/keystone',
+  include 'firewalld'
+
+  $ports.each |$port| {
+    firewalld_port { "${port}":
+      ensure   => present,
+      zone     => 'public',
+      port     => $port,
+      protocol => 'tcp',
+    }
   }
 
-  # this runs 'keystone-manage db_sync'
-  class { 'keystone::db::sync': }
+  # db connection for keystone
+  class { 'keystone::db':
+    database_connection => "mysql+pymysql://keystone:${kstone_db_pass}@db/keystone",
+  }
 
-  #class { 'keystone':
-    #database_connection => 'mysql+pymysql://keystone:"${kstone_db_pass}"@db/keystone',
-    #catalog_driver => 'sql',
+  class { 'keystone':
+    catalog_driver => 'sql',
     # admin_token => "${admin_tkn}",
-    #enabled => true,
-    #service_name => 'httpd',
-  #}
-
-
+    enabled => true,
+    service_name => 'httpd',
+  }
 
   # setup the keystone database schema
   # This runs 'keystone-manage db_sync'
   # class { 'keystone::db::sync': }
 
-  # configure the apache/WSGI front-end (standard for keystone)
-  #class { 'keystone::wsgi::apache':
+  # apache/WSGI front-end (standard for keystone)
+  class { 'keystone::wsgi::apache':
     # set to true for production
-  #  ssl => false,
-  #}
+    ssl => false,
+  }
 
   # bootstrap the admin user and endpoints
-  #class { 'keystone::bootstrap':
+  class { 'keystone::bootstrap':
     # password     => "${admin_pass}",
-    #password     => 'admin',
-    #email        => 'masumndc1@gmail.com',
-    #project_name => 'admin',
-    #username     => 'admin',
-    #public_url   => 'http://keystone:5000',
-    #admin_url    => 'http://keystone:35357',
-    #internal_url => 'http://keystone:5000',
-    #region       => 'RegionOne',
-  #}
+    password     => 'admin',
+    email        => 'masumndc1@gmail.com',
+    project_name => 'admin',
+    username     => 'admin',
+    public_url   => 'http://keystone:5000',
+    admin_url    => 'http://keystone:35357',
+    internal_url => 'http://keystone:5000',
+    region       => 'RegionOne',
+  }
 
   }
   return $report
