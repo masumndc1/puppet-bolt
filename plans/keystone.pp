@@ -7,6 +7,7 @@ plan practise::keystone (
   $kstone_db_pass = lookup('keystone_db_pass', default_value => [])
   $admin_tkn = lookup('admin_token', default_value => [])
   $admin_pss = lookup('admin_pass', default_value => [])
+  $email = lookup('admin_email', default_value => [])
   $ports = lookup('open_ports', default_value => [])
 
   if $facts['os']['family'] =~ "RedHat" {
@@ -56,9 +57,8 @@ plan practise::keystone (
 
   # bootstrap the admin user and endpoints
   class { 'keystone::bootstrap':
-    # password     => "${admin_pass}",
-    password     => 'admin',
-    email        => 'masumndc1@gmail.com',
+    password     => $admin_pss,
+    email        => $email,
     project_name => 'admin',
     username     => 'admin',
     public_url   => 'http://keystone:5000',
