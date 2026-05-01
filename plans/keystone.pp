@@ -4,6 +4,9 @@ plan practise::keystone (
   apply_prep($nodes)
   $report = apply($nodes) {
   $pkgs = lookup('pkgs', merge => 'unique', default_value => [])
+  $kstone_db_pass = lookup('keystone_db_pass', default_value => [])
+  $admin_tkn = lookup('admin_token', default_value => [])
+  $admin_pss = lookup('admin_pass', default_value => [])
 
   if $facts['os']['family'] =~ "RedHat" {
     $pkgs.each | $pkg | {
@@ -16,6 +19,47 @@ plan practise::keystone (
 
   # define all lookup here
   include 'mysql::client'
+
+  # db connection
+  class { 'keystone::db':
+    database_connection => 'mysql+pymysql://keystone:"${kstone_db_pass}"@db/keystone',
+  }
+
+  # this runs 'keystone-manage db_sync'
+  class { 'keystone::db::sync': }
+
+  #class { 'keystone':
+    #database_connection => 'mysql+pymysql://keystone:"${kstone_db_pass}"@db/keystone',
+    #catalog_driver => 'sql',
+    # admin_token => "${admin_tkn}",
+    #enabled => true,
+    #service_name => 'httpd',
+  #}
+
+
+
+  # setup the keystone database schema
+  # This runs 'keystone-manage db_sync'
+  # class { 'keystone::db::sync': }
+
+  # configure the apache/WSGI front-end (standard for keystone)
+  #class { 'keystone::wsgi::apache':
+    # set to true for production
+  #  ssl => false,
+  #}
+
+  # bootstrap the admin user and endpoints
+  #class { 'keystone::bootstrap':
+    # password     => "${admin_pass}",
+    #password     => 'admin',
+    #email        => 'masumndc1@gmail.com',
+    #project_name => 'admin',
+    #username     => 'admin',
+    #public_url   => 'http://keystone:5000',
+    #admin_url    => 'http://keystone:35357',
+    #internal_url => 'http://keystone:5000',
+    #region       => 'RegionOne',
+  #}
 
   }
   return $report
