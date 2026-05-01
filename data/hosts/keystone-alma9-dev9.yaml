@@ -1,0 +1,2 @@
+---
+pkgs: ['epel-release', 'centos-release-openstack-yoga.noarch']
