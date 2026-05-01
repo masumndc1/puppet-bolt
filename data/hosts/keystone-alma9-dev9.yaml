@@ -1,2 +1,7 @@
 ---
-pkgs: ['epel-release', 'centos-release-openstack-yoga.noarch']
+pkgs: ['epel-release', 'centos-release-openstack-yoga.noarch', 'python3-mysqlclient', 'python3-PyMySQL']
+keystone_db_pass: 'admin'
+# Use a secure token
+admin_token: 'admin'
+admin_pass: 'admin'
+admin_email: 'masumndc1@gmail.com'
