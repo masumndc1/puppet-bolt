@@ -1,3 +1,6 @@
 ---
 keystone_db_pass: 'admin'
 glance_db_pass: 'admin'
+nova_db_pass: 'admin'
+cinder_db_pass: 'admin'
+neutron_db_pass: 'admin'
