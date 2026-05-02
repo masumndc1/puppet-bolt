@@ -20,6 +20,12 @@ plan practise::keystone (
     }
   }
 
+  # enable crb repo
+  yum::repo { 'crb':
+    enabled => 1,
+  }
+
+
   # define all lookup here
   include 'mysql::client'
 

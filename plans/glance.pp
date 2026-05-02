@@ -17,6 +17,11 @@ plan practise::glance (
     }
   }
 
+  # enable crb repo
+  yum::repo { 'crb':
+    enabled => 1,
+  }
+
   include 'mysql::client'
   include 'firewalld'
 
