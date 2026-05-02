@@ -1,0 +1,9 @@
+---
+pkgs: ["epel-release", "centos-release-openstack-yoga.noarch"]
+glance_db_pass: "admin"
+glance_pass: "admin"
+# Use a secure token
+admin_token: "admin"
+admin_pass: "admin"
+admin_email: "masumndc1@gmail.com"
+open_ports: ['9292', '3306']
