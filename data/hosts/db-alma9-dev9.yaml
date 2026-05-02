@@ -1,2 +1,3 @@
 ---
 keystone_db_pass: 'admin'
+glance_db_pass: 'admin'
