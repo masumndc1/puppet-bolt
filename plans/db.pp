@@ -5,11 +5,18 @@ plan practise::db (
   $report = apply($nodes) {
 
   # lookups here
-  $kstone_db_pass = lookup('keystone_db_pass', default_value => [])
+  $keystone_db_pass = lookup('keystone_db_pass', default_value => [])
   $glance_db_pass = lookup('glance_db_pass', default_value => [])
+  $nova_db_pass = lookup('nova_db_pass', default_value => [])
+  $cinder_db_pass = lookup('cinder_db_pass', default_value => [])
+  $neutron_db_pass = lookup('neutron_db_pass', default_value => [])
+
+  # enable crb repo
+  yumrepo { 'crb':
+    enabled => 1,
+  }
 
   include 'firewalld'
-
   # add mysql service to firewalld
   firewalld_service { 'mysql':
     ensure  => present,
@@ -31,7 +38,7 @@ plan practise::db (
   # define the mysql database for keystone
   mysql::db { 'keystone':
     user     => 'keystone',
-    password => "${kstone_db_pass}",
+    password => "${keystone_db_pass}",
     host     => 'localhost',
     grant    => ['ALL'],
     charset  => 'utf8',
@@ -42,6 +49,36 @@ plan practise::db (
   mysql::db { 'glance':
     user     => 'glance',
     password => "${glance_db_pass}",
+    host     => '%',
+    grant    => ['ALL'],
+    charset  => 'utf8',
+    collate  => 'utf8_general_ci',
+  }
+
+  # define the mysql database for nova
+  mysql::db { 'nova':
+    user     => 'nova',
+    password => "${nova_db_pass}",
+    host     => '%',
+    grant    => ['ALL'],
+    charset  => 'utf8',
+    collate  => 'utf8_general_ci',
+  }
+
+  # define the mysql database for cinder
+  mysql::db { 'cinder':
+    user     => 'cinder',
+    password => "${cinder_db_pass}",
+    host     => '%',
+    grant    => ['ALL'],
+    charset  => 'utf8',
+    collate  => 'utf8_general_ci',
+  }
+
+  # define the mysql database for neutron
+  mysql::db { 'neutron':
+    user     => 'neutron',
+    password => "${neutron_db_pass}",
     host     => '%',
     grant    => ['ALL'],
     charset  => 'utf8',
