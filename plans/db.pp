@@ -42,11 +42,12 @@ plan practise::db (
   mysql::db { 'glance':
     user     => 'glance',
     password => "${glance_db_pass}",
-    host     => 'localhost',
+    host     => '%',
     grant    => ['ALL'],
     charset  => 'utf8',
     collate  => 'utf8_general_ci',
   }
+
   }
   return $report
 }
