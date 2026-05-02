@@ -109,6 +109,10 @@ groups:
       - sys-ubu22-dev9
       - keystone-alma9-dev9
       - db-alma9-dev9
+      - nova-alma9-dev9
+      - cinder-alma9-dev9
+      - glance-alma9-dev9
+      - neutron-alma9-dev9
       - openstackmac
     config:
       transport: ssh
