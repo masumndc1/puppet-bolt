@@ -9,6 +9,7 @@ plan practise::keystone (
   $admin_pss = lookup('admin_pass', default_value => [])
   $email = lookup('admin_email', default_value => [])
   $ports = lookup('open_ports', default_value => [])
+  $glance_pass = lookup('glance_pass', default_value => [])
 
   if $facts['os']['family'] =~ "RedHat" {
     $pkgs.each | $pkg | {
@@ -65,6 +66,14 @@ plan practise::keystone (
     admin_url    => 'http://keystone:35357',
     internal_url => 'http://keystone:5000',
     region       => 'RegionOne',
+  }
+
+  # setup glance auth
+  class { 'glance::keystone::auth':
+    password     => $glance_pass,
+    public_url   => 'http://glance:9292',
+    admin_url    => 'http://glance:9292',
+    internal_url => 'http://glance:9292',
   }
 
   }
