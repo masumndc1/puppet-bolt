@@ -4,12 +4,15 @@ plan practise::keystone (
   apply_prep($nodes)
   $report = apply($nodes) {
   $pkgs = lookup('pkgs', merge => 'unique', default_value => [])
-  $kstone_db_pass = lookup('keystone_db_pass', default_value => [])
-  $admin_tkn = lookup('admin_token', default_value => [])
-  $admin_pss = lookup('admin_pass', default_value => [])
+  $keystone_db_pass = lookup('keystone_db_pass', default_value => [])
+  $admin_token = lookup('admin_token', default_value => [])
+  $admin_pass = lookup('admin_pass', default_value => [])
   $email = lookup('admin_email', default_value => [])
   $ports = lookup('open_ports', default_value => [])
   $glance_pass = lookup('glance_pass', default_value => [])
+  $cinder_pass = lookup('cinder_pass', default_value => [])
+  $nova_pass = lookup('nova_pass', default_value => [])
+  $neutron_pass = lookup('neutron_pass', default_value => [])
 
   if $facts['os']['family'] =~ "RedHat" {
     $pkgs.each | $pkg | {
@@ -21,7 +24,7 @@ plan practise::keystone (
   }
 
   # enable crb repo
-  yum::repo { 'crb':
+  yumrepo { 'crb':
     enabled => 1,
   }
 
@@ -42,12 +45,12 @@ plan practise::keystone (
 
   # db connection for keystone
   class { 'keystone::db':
-    database_connection => "mysql+pymysql://keystone:${kstone_db_pass}@db/keystone",
+    database_connection => "mysql+pymysql://keystone:${keystone_db_pass}@db/keystone",
   }
 
   class { 'keystone':
     catalog_driver => 'sql',
-    # admin_token => "${admin_tkn}",
+    # admin_token => "${admin_token}",
     enabled => true,
     service_name => 'httpd',
   }
@@ -64,7 +67,7 @@ plan practise::keystone (
 
   # bootstrap the admin user and endpoints
   class { 'keystone::bootstrap':
-    password     => $admin_pss,
+    password     => $admin_pass,
     email        => $email,
     project_name => 'admin',
     username     => 'admin',
@@ -80,6 +83,15 @@ plan practise::keystone (
     public_url   => 'http://glance:9292',
     admin_url    => 'http://glance:9292',
     internal_url => 'http://glance:9292',
+    region       => 'RegionOne',
+  }
+
+  class { 'cinder::keystone::auth':
+    password        => $cinder_pass,
+    public_url_v3   => 'http://cinder:8776/v3',
+    internal_url_v3 => 'http://cinder:8776/v3',
+    admin_url_v3    => 'http://cinder:8776/v3',
+    region          => 'RegionOne',
   }
 
   }
