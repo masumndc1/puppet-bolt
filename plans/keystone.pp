@@ -12,6 +12,8 @@ plan practise::keystone (
   $glance_pass = lookup('glance_pass', default_value => [])
   $cinder_pass = lookup('cinder_pass', default_value => [])
   $nova_pass = lookup('nova_pass', default_value => [])
+  $placement_pass = lookup('placement_pass', default_value => [])
+  $placement_db_pass = lookup('placement_db_pass', default_value => [])
   $neutron_pass = lookup('neutron_pass', default_value => [])
   $rabbit_pass = lookup('rabbit_pass', default_value => [])
 
@@ -93,6 +95,37 @@ plan practise::keystone (
     internal_url_v3 => 'http://cinder:8776/v3',
     admin_url_v3    => 'http://cinder:8776/v3',
     region          => 'RegionOne',
+  }
+
+  class { 'nova::keystone::auth':
+    password         => $nova_pass,
+    auth_name        => 'nova',
+    service_name     => 'nova',
+    public_url       => 'http://nova:8774',
+    internal_url     => 'http://nova:8774',
+    admin_url        => 'http://nova:8774',
+    region           => 'RegionOne',
+    configure_endpoint => true,
+    configure_user     => true,
+  }
+
+  class { 'placement::keystone::auth':
+    password     => $placement_pass,
+    public_url   => 'http://nova:8778',
+    internal_url => 'http://nova:8778',
+    admin_url    => 'http://nova:8778',
+  }
+
+  class { 'placement::db':
+    database_connection => "mysql+pymysql://placement:${placement_db_pass}@db/placement",
+  }
+
+  class { 'placement::api':
+  }
+
+  # this sets up the Apache VHost for placement on port 8778
+  class { 'placement::wsgi::apache':
+    ssl => false,
   }
 
   # rabbit
