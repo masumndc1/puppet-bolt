@@ -18,7 +18,7 @@ plan practise::glance (
   }
 
   # enable crb repo
-  yum::repo { 'crb':
+  yumrepo { 'crb':
     enabled => 1,
   }
 
