@@ -1,0 +1,6 @@
+---
+pkgs: ["epel-release", "centos-release-openstack-yoga.noarch"]
+cinder_db_pass: "admin"
+cinder_pass: "S3cr3t"
+open_ports: ['8776']
+rabbit_pass: 'admin'
