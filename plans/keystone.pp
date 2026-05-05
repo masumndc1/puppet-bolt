@@ -13,6 +13,7 @@ plan practise::keystone (
   $cinder_pass = lookup('cinder_pass', default_value => [])
   $nova_pass = lookup('nova_pass', default_value => [])
   $neutron_pass = lookup('neutron_pass', default_value => [])
+  $rabbit_pass = lookup('rabbit_pass', default_value => [])
 
   if $facts['os']['family'] =~ "RedHat" {
     $pkgs.each | $pkg | {
@@ -106,7 +107,7 @@ plan practise::keystone (
   # Create a user
   rabbitmq_user { 'rabbit':
     admin    => false,
-    password => 'admin',
+    password => $rabbit_pass,
   }
 
   # Create a vhost
