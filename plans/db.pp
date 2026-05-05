@@ -8,6 +8,7 @@ plan practise::db (
   $keystone_db_pass = lookup('keystone_db_pass', default_value => [])
   $glance_db_pass = lookup('glance_db_pass', default_value => [])
   $nova_db_pass = lookup('nova_db_pass', default_value => [])
+  $placement_db_pass = lookup('placement_db_pass', default_value => [])
   $cinder_db_pass = lookup('cinder_db_pass', default_value => [])
   $neutron_db_pass = lookup('neutron_db_pass', default_value => [])
 
@@ -59,6 +60,16 @@ plan practise::db (
   mysql::db { 'nova':
     user     => 'nova',
     password => "${nova_db_pass}",
+    host     => '%',
+    grant    => ['ALL'],
+    charset  => 'utf8',
+    collate  => 'utf8_general_ci',
+  }
+
+  # define the mysql database for placement
+  mysql::db { 'placement':
+    user     => 'placement',
+    password => "${placement_db_pass}",
     host     => '%',
     grant    => ['ALL'],
     charset  => 'utf8',
