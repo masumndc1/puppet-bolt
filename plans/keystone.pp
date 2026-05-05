@@ -94,6 +94,34 @@ plan practise::keystone (
     region          => 'RegionOne',
   }
 
+  # rabbit
+  class { 'rabbitmq':
+    port              => 5672,
+    # Recommended for security
+    delete_guest_user => true,
+    service_manage    => true,
+    admin_enable => true,
+  }
+
+  # Create a user
+  rabbitmq_user { 'rabbit':
+    admin    => false,
+    password => 'admin',
+  }
+
+  # Create a vhost
+  rabbitmq_vhost { '/rabbit_vhost':
+    ensure => present,
+  }
+
+  # Set permissions (configure, read, write)
+  rabbitmq_user_permissions { 'rabbit@/rabbit_vhost':
+    configure_permission => '.*',
+    read_permission      => '.*',
+    write_permission     => '.*',
+  }
+
+
   }
   return $report
 }
