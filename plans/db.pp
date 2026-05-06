@@ -40,7 +40,7 @@ plan practise::db (
   mysql::db { 'keystone':
     user     => 'keystone',
     password => "${keystone_db_pass}",
-    host     => 'localhost',
+    host     => '%',
     grant    => ['ALL'],
     charset  => 'utf8',
     collate  => 'utf8_general_ci',
@@ -58,6 +58,16 @@ plan practise::db (
 
   # define the mysql database for nova
   mysql::db { 'nova':
+    user     => 'nova',
+    password => "${nova_db_pass}",
+    host     => '%',
+    grant    => ['ALL'],
+    charset  => 'utf8',
+    collate  => 'utf8_general_ci',
+  }
+
+  # define the mysql database for nova_api
+  mysql::db { 'nova_api':
     user     => 'nova',
     password => "${nova_db_pass}",
     host     => '%',
