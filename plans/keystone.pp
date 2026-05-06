@@ -12,6 +12,7 @@ plan practise::keystone (
   $glance_pass = lookup('glance_pass', default_value => [])
   $cinder_pass = lookup('cinder_pass', default_value => [])
   $nova_pass = lookup('nova_pass', default_value => [])
+  $nova_db_pass = lookup('nova_db_pass', default_value => [])
   $placement_pass = lookup('placement_pass', default_value => [])
   $placement_db_pass = lookup('placement_db_pass', default_value => [])
   $neutron_pass = lookup('neutron_pass', default_value => [])
@@ -23,8 +24,7 @@ plan practise::keystone (
         name => $pkg,
         ensure => installed,
       }
-    }
-  }
+    } }
 
   # enable crb repo
   yumrepo { 'crb':
@@ -111,9 +111,9 @@ plan practise::keystone (
 
   class { 'placement::keystone::auth':
     password     => $placement_pass,
-    public_url   => 'http://nova:8778',
-    internal_url => 'http://nova:8778',
-    admin_url    => 'http://nova:8778',
+    public_url   => 'http://keystone:8778',
+    internal_url => 'http://keystone:8778',
+    admin_url    => 'http://keystone:8778',
   }
 
   class { 'placement::db':
@@ -121,6 +121,13 @@ plan practise::keystone (
   }
 
   class { 'placement::api':
+  }
+
+  class { 'placement::keystone::authtoken':
+    password             => $placement_pass,
+    auth_url             => 'http://keystone:5000',
+    www_authenticate_uri => 'http://keystone:5000',
+    memcached_servers    => ["keystone:11211"],
   }
 
   # this sets up the Apache VHost for placement on port 8778
@@ -138,22 +145,44 @@ plan practise::keystone (
   }
 
   # Create a user
-  rabbitmq_user { 'rabbit':
-    admin    => false,
-    password => $rabbit_pass,
+  rabbitmq_user { 'nova':
+    admin    => true,
+    password => $nova_pass,
   }
 
   # Create a vhost
-  rabbitmq_vhost { '/rabbit_vhost':
+  rabbitmq_vhost { '/':
     ensure => present,
   }
 
   # Set permissions (configure, read, write)
-  rabbitmq_user_permissions { 'rabbit@/rabbit_vhost':
+  rabbitmq_user_permissions { 'nova@/':
     configure_permission => '.*',
     read_permission      => '.*',
     write_permission     => '.*',
   }
+
+  class { 'nova::placement':
+    auth_url => 'http://keystone:5000',
+    password => $placement_pass,
+  }
+
+  class { 'nova::keystone::authtoken':
+    password             => $nova_pass,
+    auth_url             => 'http://keystone:5000',
+    www_authenticate_uri => 'http://keystone:5000',
+  }
+
+  class { 'nova::db':
+    database_connection   => "mysql+pymysql://nova:${nova_db_pass}@db/nova",
+    api_database_connection   => "mysql+pymysql://nova:${nova_db_pass}@db/nova_api",
+  }
+
+  class { 'nova::api':
+    enabled           => true,
+  }
+  class { 'nova::scheduler': }
+  class { 'nova::conductor': }
 
 
   }
