@@ -71,7 +71,7 @@ plan practise::nova (
 
   class { 'nova':
     my_ip                 => $facts['networking']['ip'],
-    default_transport_url => "rabbit://nova:${nova_pass}@keystone:5672/",
+    default_transport_url => "rabbit://rabbit:${rabbit_pass}@keystone:5672/",
     notification_driver   => 'messagingv2',
     rabbit_ha_queues      => false,
     amqp_durable_queues   => false,
