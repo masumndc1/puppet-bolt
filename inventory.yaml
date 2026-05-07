@@ -107,12 +107,6 @@ groups:
       - sys-deb12-dev9
       - sys-deb13-dev9
       - sys-ubu22-dev9
-      - keystone-alma9-dev9
-      - db-alma9-dev9
-      - nova-alma9-dev9
-      - cinder-alma9-dev9
-      - glance-alma9-dev9
-      - neutron-alma9-dev9
       - openstackmac
     config:
       transport: ssh
@@ -121,5 +115,22 @@ groups:
         run-as: root
         host-key-check: false
         proxyjump: "colima"
+        private-key: ~/.ssh/id_ed25519
+        connect-timeout: 30
+
+  - name: lap-openstack
+    targets:
+      - keystone-alma9-dev9
+      - db-alma9-dev9
+      - nova-alma9-dev9
+      - cinder-alma9-dev9
+      - glance-alma9-dev9
+      - neutron-alma9-dev9
+    config:
+      transport: ssh
+      ssh:
+        user: masum
+        run-as: root
+        host-key-check: false
         private-key: ~/.ssh/id_ed25519
         connect-timeout: 30
