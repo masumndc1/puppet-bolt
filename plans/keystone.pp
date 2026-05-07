@@ -19,6 +19,12 @@ plan practise::keystone (
   $rabbit_pass = lookup('rabbit_pass', default_value => [])
 
   if $facts['os']['family'] =~ "RedHat" {
+    class { 'selinux':
+      mode => 'disabled',
+    }
+  }
+
+  if $facts['os']['family'] =~ "RedHat" {
     $pkgs.each | $pkg | {
       package { "${pkg}":
         name => $pkg,
