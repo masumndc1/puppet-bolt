@@ -12,4 +12,4 @@ admin_token: "admin"
 admin_pass: "admin"
 admin_email: "masumndc1@gmail.com"
 open_ports: ["5000", "3306", "35357", "9292", "5672", "8776", "8774"]
-rabbit_pass: "admin"
+rabbit_pass: "rabbit"
