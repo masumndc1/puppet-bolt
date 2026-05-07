@@ -12,6 +12,12 @@ plan practise::db (
   $cinder_db_pass = lookup('cinder_db_pass', default_value => [])
   $neutron_db_pass = lookup('neutron_db_pass', default_value => [])
 
+  if $facts['os']['family'] =~ "RedHat" {
+    class { 'selinux':
+      mode => 'disabled',
+    }
+  }
+
   # enable crb repo
   yumrepo { 'crb':
     enabled => 1,
@@ -68,6 +74,16 @@ plan practise::db (
 
   # define the mysql database for nova_api
   mysql::db { 'nova_api':
+    user     => 'nova',
+    password => "${nova_db_pass}",
+    host     => '%',
+    grant    => ['ALL'],
+    charset  => 'utf8',
+    collate  => 'utf8_general_ci',
+  }
+
+  # define the mysql database for nova_cell0
+  mysql::db { 'nova_cell0':
     user     => 'nova',
     password => "${nova_db_pass}",
     host     => '%',
