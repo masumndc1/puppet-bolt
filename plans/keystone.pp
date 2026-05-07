@@ -145,15 +145,15 @@ plan practise::keystone (
   class { 'rabbitmq':
     port              => 5672,
     # Recommended for security
-    delete_guest_user => true,
+    delete_guest_user => false,
     service_manage    => true,
     admin_enable => true,
   }
 
   # Create a user
-  rabbitmq_user { 'nova':
+  rabbitmq_user { 'rabbit':
     admin    => true,
-    password => $nova_pass,
+    password => $rabbit_pass,
   }
 
   # Create a vhost
@@ -162,7 +162,7 @@ plan practise::keystone (
   }
 
   # Set permissions (configure, read, write)
-  rabbitmq_user_permissions { 'nova@/':
+  rabbitmq_user_permissions { 'rabbit@/':
     configure_permission => '.*',
     read_permission      => '.*',
     write_permission     => '.*',
