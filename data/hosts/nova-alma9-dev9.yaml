@@ -4,5 +4,5 @@ nova_db_pass: "admin"
 nova_pass: "admin"
 neutron_pass: "admin"
 placement_pass: "admin"
-rabbit_pass: "admin"
+rabbit_pass: "rabbit"
 open_ports: ["5672", "8774", "8778"]
