@@ -162,29 +162,6 @@ plan practise::keystone (
     write_permission     => '.*',
   }
 
-  class { 'nova::placement':
-    auth_url => 'http://keystone:5000',
-    password => $placement_pass,
-  }
-
-  class { 'nova::keystone::authtoken':
-    password             => $nova_pass,
-    auth_url             => 'http://keystone:5000',
-    www_authenticate_uri => 'http://keystone:5000',
-  }
-
-  class { 'nova::db':
-    database_connection   => "mysql+pymysql://nova:${nova_db_pass}@db/nova",
-    api_database_connection   => "mysql+pymysql://nova:${nova_db_pass}@db/nova_api",
-  }
-
-  class { 'nova::api':
-    enabled           => true,
-  }
-  class { 'nova::scheduler': }
-  class { 'nova::conductor': }
-
-
   }
   return $report
 }
