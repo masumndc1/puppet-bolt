@@ -1,0 +1,4 @@
+---
+pkgs: ["epel-release", "centos-release-openstack-yoga.noarch"]
+neutron_db_pass: "admin"
+open_ports: ['5000', '3306', '35357']
