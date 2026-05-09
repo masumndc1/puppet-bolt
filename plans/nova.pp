@@ -61,7 +61,7 @@ plan practise::nova (
 
   class { 'nova::placement':
     password             => $placement_pass,
-    auth_url             => 'http://keystone:8778',
+    auth_url             => 'http://keystone:5000',
   }
 
   class { 'nova::db':
@@ -71,12 +71,10 @@ plan practise::nova (
 
   class { 'nova':
     my_ip                 => $facts['networking']['ip'],
-    default_transport_url => "rabbit://rabbit:${rabbit_pass}@keystone:5672/",
+    default_transport_url => "rabbit://rabbit:${rabbit_pass}@keystone-alma9-dev9:5672/",
     notification_driver   => 'messagingv2',
     rabbit_ha_queues      => false,
     amqp_durable_queues   => false,
-    rabbit_heartbeat_in_pthread        => false,
-    rabbit_heartbeat_timeout_threshold => 0,
   }
 
   nova_config {
@@ -85,7 +83,8 @@ plan practise::nova (
 
   class { 'nova::compute::libvirt':
     # virt_type => 'kvm',
-    virt_type => 'qemu',
+    virt_type   => 'qemu',
+    cpu_mode    => 'none',
   }
 
   class { 'nova::network::neutron':
